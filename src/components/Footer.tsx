@@ -227,7 +227,7 @@ export function Footer({ locale, t }: { locale: Locale; t: Ui }) {
             </li>
             <li>
               <a
-                href={links.reserveTheFork.value}
+                href={links.reserve.value}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="link-wipe"

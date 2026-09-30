@@ -119,16 +119,12 @@ export const ui = {
       eyebrow: "What guests say",
       title: "Rated 4.5 out of 5 on Google",
       blurb:
-        "The rating below comes from the restaurant's Google Business Profile. The individual quotes are published reviews from TheFork and OpenTable, shown unedited and attributed to their platform.",
+        "The rating comes from the restaurant's Google business profile. The restaurant operates through Google Maps, and the full set of published guest reviews is there for you to read.",
       num: "04",
       label: "Guests say",
       ratingCaption: "Google rating",
       reviewsCaption: "reviews",
       seeAllGoogle: "See all reviews on Google",
-      seeAllTheFork: "Read all reviews on TheFork",
-      sourceLabel: "Google rating",
-      quoteSource: "Guest review published on",
-      ourReply: "Note",
       widget: {
         consentTitle: "Load the live Google reviews feed",
         consentBody:
@@ -178,14 +174,13 @@ export const ui = {
       eyebrow: "Reservations",
       title: "Book a table",
       blurb:
-        "Tables are booked through the platforms the restaurant uses. Pick whichever suits you — both go to the same kitchen.",
+        "Tables are booked straight from the restaurant's Google Maps listing. Book there, or ring the restaurant directly — both go to the same kitchen.",
       headlineA: "Your table",
       headlineB: "is waiting.",
-      thefork: "Reserve on TheFork",
-      opentable: "Reserve on OpenTable",
+      reserveCta: "Reserve on Google Maps",
       byPhone: "Prefer to call?",
       callCta: "Call the restaurant",
-      note: "For a specific table and time, book through TheFork or OpenTable. Opening hours are listed below.",
+      note: "For a specific table and time, book through Google Maps or call the restaurant. Opening hours are listed below.",
     },
 
     footer: {
@@ -217,10 +212,10 @@ export const ui = {
         "The address section shows a schematic map drawn with CSS. A real Google map is only requested if you press the button on it. Until you do, Google receives no request from this page. After you load it, Google may set its own cookies and apply its own privacy policy.",
       thirdPartyTitle: "Links to other services",
       thirdPartyBody:
-        "Booking (TheFork, OpenTable), delivery (Uber Eats), the restaurant's own site, and its social accounts are operated by other companies. Anything you do on those services is governed by their privacy policies, not by this notice.",
+        "Booking (Google Maps), delivery (Uber Eats), the restaurant's own site, and its social accounts are operated by other companies. Anything you do on those services is governed by their privacy policies, not by this notice.",
       widgetTitle: "The Google reviews feed",
       widgetBody:
-        "The reviews section can show a live feed of Google reviews. Google does not allow reviews to be embedded directly, so that feed comes from a third-party service. It is not requested, and no cookie is set by it, until you press its button. If you accept, that service may set its own cookies and process data about your visit under its own privacy policy. You can decline and carry on using the rest of the site; the rating and the published quotes remain available either way.",
+        "The reviews section can show a live feed of Google reviews. Google does not allow reviews to be embedded directly, so that feed comes from a third-party service. It is not requested, and no cookie is set by it, until you press its button. If you accept, that service may set its own cookies and process data about your visit under its own privacy policy. You can decline and carry on using the rest of the site; the rating remains available either way.",
       contactTitle: "Questions",
       contactBody: "Write to the restaurant and we will point you in the right direction.",
     },
@@ -273,10 +268,10 @@ export const ui = {
         "Reading this website requires no account and no form. The site sets no cookies of its own and runs no analytics, advertising or profiling scripts, so no profile of you is built by visiting. The only third-party content that can be requested from this page is the map in the address section, and only if you press its button; until you do, no request reaches Google.",
       bookingTitle: "Reservations and enquiries",
       bookingBody:
-        "Tables are booked through TheFork, OpenTable or by telephone. Those services are run by other companies, and what they collect is governed by their own privacy policies, not by this one. Booking on this site does not send your details to the restaurant: nothing on this website transmits a booking.",
+        "Tables are booked through the restaurant's Google Maps listing or by telephone. Booking on Google Maps is handled by Google and governed by its privacy policy; the phone call is between you and the restaurant. Booking on this site does not send your details to the restaurant: nothing on this website transmits a booking.",
       rightsTitle: "Your rights",
       rightsBody:
-        "You may ask what data is held about you, have it corrected, deleted or restricted, object to its use, and request a copy, by writing to the address above. Because most of the data about bookings sits with the booking platforms rather than with the restaurant, it is usually fastest to ask them directly.",
+        "You may ask what data is held about you, have it corrected, deleted or restricted, object to its use, and request a copy, by writing to the address above. Because most of the data about bookings sits with Google Maps rather than with the restaurant, it is usually fastest to ask them directly.",
       changesTitle: "Changes",
       changesBody:
         "If this policy changes, the updated text will appear on this page. There is no separate mailing list and no consent to withdraw, because no marketing list is kept here.",
@@ -434,16 +429,12 @@ export const ui = {
       eyebrow: "Opiniones",
       title: "4,5 sobre 5 en Google",
       blurb:
-        "La valoración procede del perfil de empresa en Google. Las citas individuales son opiniones publicadas en TheFork y OpenTable, mostradas sin editar y atribuidas a su plataforma.",
+        "La valoración procede del perfil de empresa del restaurante en Google. El restaurante opera a través de Google Maps, y allí puedes leer el conjunto completo de opiniones publicadas.",
       num: "04",
       label: "Dicen los clientes",
       ratingCaption: "Valoración en Google",
       reviewsCaption: "opiniones",
       seeAllGoogle: "Ver todas las opiniones en Google",
-      seeAllTheFork: "Leer todas las opiniones en TheFork",
-      sourceLabel: "Valoración en Google",
-      quoteSource: "Opinión publicada en",
-      ourReply: "Nota",
       widget: {
         consentTitle: "Cargar las opiniones de Google en directo",
         consentBody:
@@ -493,14 +484,13 @@ export const ui = {
       eyebrow: "Reservas",
       title: "Reserva tu mesa",
       blurb:
-        "Las reservas se hacen a través de las plataformas que usa el restaurante. Elige la que prefieras: ambas van a la misma cocina.",
+        "Las mesas se reservan directamente desde la ficha de Google Maps del restaurante. Reserva allí o llama al restaurante: ambas opciones van a la misma cocina.",
       headlineA: "Tu mesa",
       headlineB: "te espera.",
-      thefork: "Reservar en TheFork",
-      opentable: "Reservar en OpenTable",
+      reserveCta: "Reservar en Google Maps",
       byPhone: "¿Prefieres llamar?",
       callCta: "Llamar al restaurante",
-      note: "Para una mesa y una hora concretas, reserva en TheFork o OpenTable. Los horarios están indicados abajo.",
+      note: "Para una mesa y una hora concretas, reserva desde Google Maps o llama al restaurante. Los horarios están indicados abajo.",
     },
 
     footer: {
@@ -532,10 +522,10 @@ export const ui = {
         "La sección de dirección muestra un mapa esquemático dibujado con CSS. El mapa real de Google solo se solicita si pulsas el botón. Hasta que lo hagas, esta página no envía ninguna petición a Google. Después de cargarlo, Google puede instalar sus propias cookies y aplicar su propia política de privacidad.",
       thirdPartyTitle: "Enlaces a otros servicios",
       thirdPartyBody:
-        "Las reservas (TheFork, OpenTable), el reparto (Uber Eats), la web del restaurante y sus redes sociales son gestionados por otras empresas. Lo que hagas en esos servicios se rige por sus políticas de privacidad, no por este aviso.",
+        "Las reservas (Google Maps), el reparto (Uber Eats), la web del restaurante y sus redes sociales son gestionados por otras empresas. Lo que hagas en esos servicios se rige por sus políticas de privacidad, no por este aviso.",
       widgetTitle: "El feed de opiniones de Google",
       widgetBody:
-        "La sección de opiniones puede mostrar un feed en directo de opiniones de Google. Google no permite incrustar opiniones directamente, así que ese feed procede de un servicio de terceros. No se solicita, ni dicho servicio instala cookies, hasta que pulses su botón. Si aceptas, ese servicio podrá instalar sus propias cookies y tratar datos sobre tu visita conforme a su propia política de privacidad. Puedes rechazarlo y seguir usando el resto del sitio; la valoración y las citas publicadas están disponibles igualmente.",
+        "La sección de opiniones puede mostrar un feed en directo de opiniones de Google. Google no permite incrustar opiniones directamente, así que ese feed procede de un servicio de terceros. No se solicita, ni dicho servicio instala cookies, hasta que pulses su botón. Si aceptas, ese servicio podrá instalar sus propias cookies y tratar datos sobre tu visita conforme a su propia política de privacidad. Puedes rechazarlo y seguir usando el resto del sitio; la valoración está disponible igualmente.",
       contactTitle: "Preguntas",
       contactBody: "Escríbenos al restaurante y te orientaremos.",
     },
@@ -583,10 +573,10 @@ export const ui = {
         "Leer este sitio web no requiere cuenta ni formulario. El sitio no instala cookies propias ni utiliza analítica, publicidad ni scripts de perfilado, por lo que la visita no construye ningún perfil sobre ti. El único contenido de terceros que puede solicitarse desde esta página es el mapa de la sección de dirección, y solo si pulsas su botón; hasta que lo hagas, no llega ninguna petición a Google.",
       bookingTitle: "Reservas y consultas",
       bookingBody:
-        "Las mesas se reservan a través de TheFork, OpenTable o por teléfono. Esos servicios los gestionan otras empresas, y los datos que recojan se rigen por sus propias políticas de privacidad, no por esta. Reservar desde este sitio no envía tus datos al restaurante: nada en esta web transmite una reserva.",
+        "Las mesas se reservan desde la ficha de Google Maps del restaurante o por teléfono. La reserva en Google Maps la gestiona Google y se rige por su política de privacidad; la llamada es entre tú y el restaurante. Reservar desde este sitio no envía tus datos al restaurante: nada en esta web transmite una reserva.",
       rightsTitle: "Tus derechos",
       rightsBody:
-        "Puedes pedir qué datos se tratan sobre ti, solicitar su rectificación, supresión o limitación, oponerte a su uso y pedir una copia, escribiendo a la dirección indicada arriba. Como la mayor parte de los datos de las reservas se encuentran en las plataformas de reserva y no en el restaurante, suele ser más rápido pedirlo directamente a ellas.",
+        "Puedes pedir qué datos se tratan sobre ti, solicitar su rectificación, supresión o limitación, oponerte a su uso y pedir una copia, escribiendo a la dirección indicada arriba. Como la mayor parte de los datos de las reservas se encuentra en Google Maps y no en el restaurante, suele ser más rápido pedirlo directamente a Google.",
       changesTitle: "Cambios",
       changesBody:
         "Si esta política cambia, el texto actualizado aparecerá en esta página. No hay lista de correo ni consentimiento que retirar, porque aquí no se conserva ninguna lista de marketing.",
@@ -743,16 +733,12 @@ export const ui = {
       eyebrow: "Opinions",
       title: "4,5 sobre 5 a Google",
       blurb:
-        "La valoració prové del perfil d'empresa a Google. Les citacions individuals són opinions publicades a TheFork i OpenTable, mostrades sense editar i atribuïdes a la seva plataforma.",
+        "La valoració prové del perfil d'empresa del restaurant a Google. El restaurant opera a través de Google Maps, i allà pots llegir el conjunt complet d'opinions publicades.",
       num: "04",
       label: "Diuen els clients",
       ratingCaption: "Valoració a Google",
       reviewsCaption: "opinions",
       seeAllGoogle: "Veure totes les opinions a Google",
-      seeAllTheFork: "Llegir totes les opinions a TheFork",
-      sourceLabel: "Valoració a Google",
-      quoteSource: "Opinió publicada a",
-      ourReply: "Nota",
       widget: {
         consentTitle: "Carregar les opinions de Google en directe",
         consentBody:
@@ -802,14 +788,13 @@ export const ui = {
       eyebrow: "Reserves",
       title: "Reserva la teva taula",
       blurb:
-        "Les reserves es fan a través de les plataformes que fa servir el restaurant. Tria la que vulguis: totes dues van a la mateixa cuina.",
+        "Les taules es reserven directament des de la fitxa de Google Maps del restaurant. Reserva allà o truca al restaurant: totes dues opcions van a la mateixa cuina.",
       headlineA: "La teva taula",
       headlineB: "t'espera.",
-      thefork: "Reservar a TheFork",
-      opentable: "Reservar a OpenTable",
+      reserveCta: "Reservar a Google Maps",
       byPhone: "Prefereixes trucar?",
       callCta: "Trucar al restaurant",
-      note: "Per a una taula i una hora concretes, reserva a TheFork o OpenTable. Els horaris són indicats a sota.",
+      note: "Per a una taula i una hora concretes, reserva des de Google Maps o truca al restaurant. Els horaris són indicats a sota.",
     },
 
     footer: {
@@ -841,10 +826,10 @@ export const ui = {
         "L'apartat de l'adreça mostra un mapa esquemàtic dibuixat amb CSS. El mapa real de Google només se sol·licita si prems el botó. Fins que ho facis, aquesta pàgina no envia cap sol·licitud a Google. Després de carregar-lo, Google pot instal·lar les seves pròpies galetes i aplicar la seva política de privadesa.",
       thirdPartyTitle: "Enllaços a altres serveis",
       thirdPartyBody:
-        "Les reserves (TheFork, OpenTable), el repartiment (Uber Eats), el web del restaurant i les seves xarxes socials els gestionen altres empreses. El que facis en aquests serveis es regeix per les seves pròpies polítiques de privadesa, no per aquest avís.",
+        "Les reserves (Google Maps), el repartiment (Uber Eats), el web del restaurant i les seves xarxes socials els gestionen altres empreses. El que facis en aquests serveis es regeix per les seves pròpies polítiques de privadesa, no per aquest avís.",
       widgetTitle: "El feed d'opinions de Google",
       widgetBody:
-        "La secció d'opinions pot mostrar un feed en directe d'opinions de Google. Google no permet incrustar opinions directament, de manera que aquest feed prové d'un servei de tercers. No se sol·licita, ni dit servei instal·la galetes, fins que prems el botó. Si ho acceptes, aquest servei podrà instal·lar les seves pròpies galetes i tractar dades sobre la teva visita d'acord amb la seva política de privadesa. Ho pots rebutjar i continuar fent servir la resta del lloc; la valoració i les citacions publicades continuen disponibles igualment.",
+        "La secció d'opinions pot mostrar un feed en directe d'opinions de Google. Google no permet incrustar opinions directament, de manera que aquest feed prové d'un servei de tercers. No se sol·licita, ni dit servei instal·la galetes, fins que prems el botó. Si ho acceptes, aquest servei podrà instal·lar les seves pròpies galetes i tractar dades sobre la teva visita d'acord amb la seva política de privadesa. Ho pots rebutjar i continuar fent servir la resta del lloc; la valoració continua disponible igualment.",
       contactTitle: "Preguntes",
       contactBody: "Escriu-nos al restaurant i t'orientarem.",
     },
@@ -892,10 +877,10 @@ export const ui = {
         "Llegir aquest lloc web no requereix compte ni formulari. El lloc no instal·la galetes pròpies ni utilitza analítica, publicitat ni scripts de perfilació, de manera que la visita no construeix cap perfil sobre tu. L'únic contingut de tercers que es pot sol·licitar des d'aquesta pàgina és el mapa de l'apartat d'adreça, i només si prems el botó; fins que ho facis, no arriba cap sol·licitud a Google.",
       bookingTitle: "Reserves i consultes",
       bookingBody:
-        "Les taules es reserven a través de TheFork, OpenTable o per telèfon. Aquests serveis els gestiona altres empreses, i les dades que recullin es regeixen per les seves pròpies polítiques de privadesa, no per aquesta. Reservar des d'aquest lloc no envia les teves dades al restaurant: res en aquest web transmet una reserva.",
+        "Les taules es reserven des de la fitxa de Google Maps del restaurant o per telèfon. La reserva a Google Maps la gestiona Google i es regeix per la seva política de privadesa; la trucada és entre tu i el restaurant. Reservar des d'aquest lloc no envia les teves dades al restaurant: res en aquest web transmet una reserva.",
       rightsTitle: "Els teus drets",
       rightsBody:
-        "Pots demanar quines dades es tracten sobre tu, sol·licitar-ne la rectificació, supressió o limitació, oposar-te al seu ús i demanar-ne una còpia, escrivint a l'adreça indicada a dalt. Com que la major part de les dades de les reserves es troben a les plataformes de reserva i no al restaurant, sol ser més ràpid demanar-ho directament a elles.",
+        "Pots demanar quines dades es tracten sobre tu, sol·licitar-ne la rectificació, supressió o limitació, oposar-te al seu ús i demanar-ne una còpia, escrivint a l'adreça indicada a dalt. Com que la major part de les dades de les reserves es troba a Google Maps i no al restaurant, sol ser més ràpid demanar-ho directament a Google.",
       changesTitle: "Canvis",
       changesBody:
         "Si aquesta política canvia, el text actualitzat apareixerà en aquesta pàgina. No hi ha cap llista de correu ni consentiment que retirar, perquè aquí no es conserva cap llista de màrqueting.",

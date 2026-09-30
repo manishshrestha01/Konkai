@@ -13,9 +13,12 @@ export function formatPrice(value: number, locale: Locale): string {
   }).format(value);
 }
 
-/** "12:00" -> "12:00" in 24h; already 24h so only padding is needed. */
+/** "12:00" -> "12:00" in 24h; "24:00" and "25:00" roll over to 00:00 / 01:00. */
 export function formatTime(hhmm: string): string {
-  return hhmm;
+  const [h, m] = hhmm.split(":").map(Number);
+  const total = h * 60 + m;
+  const rolled = total % (24 * 60);
+  return `${String(Math.floor(rolled / 60)).padStart(2, "0")}:${String(rolled % 60).padStart(2, "0")}`;
 }
 
 /** Numeric rating rendered with the locale's decimal separator. */
@@ -61,8 +64,31 @@ const JS_DAY = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
 
 /** Index 0 = Monday, matching the `openingHours` table. */
 export function todayIndex(): number {
-  const js = new Date().getDay();
-  return (js + 6) % 7;
+  return madridPart(new Date()).day;
+}
+
+/**
+ * The day index and minutes-since-midnight in Barcelona local time
+ * (Europe/Madrid, CET or CEST depending on the season), regardless of where
+ * the visitor is. Opening hours are quoted in Barcelona time, so the "open
+ * now" badge must evaluate that clock, not the visitor's.
+ */
+function madridPart(now: Date): { day: number; minutes: number } {
+  const fmt = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Europe/Madrid",
+    weekday: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+  const parts = Object.fromEntries(fmt.formatToParts(now).map((p) => [p.type, p.value]));
+  const js = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"].indexOf(
+    parts.weekday.toLowerCase().slice(0, 3),
+  );
+  const day = (js + 6) % 7;
+  const hour = Number(parts.hour) % 24;
+  const minute = Number(parts.minute);
+  return { day, minutes: hour * 60 + minute };
 }
 
 /** Minutes since midnight. Treats "24:00" as end-of-day rather than 0. */
@@ -82,14 +108,30 @@ export interface OpenState {
 }
 
 /**
- * Resolves live open/closed state in the browser using the visitor's clock.
- * Rendered on the server as a neutral "check hours" state, then hydrated, so
- * the static HTML never asserts a claim that could be wrong.
+ * Resolves live open/closed state in the browser against the restaurant's own
+ * clock (Europe/Madrid), so visitors anywhere see the same answer as someone
+ * standing outside the door. Rendered on the server as a neutral "check
+ * hours" state, then hydrated, so the static HTML never asserts a claim that
+ * could be wrong.
  */
 export function getOpenState(now: Date = new Date()): OpenState {
-  const idx = todayIndex();
-  const today = openingHours[idx];
-  const minutes = now.getHours() * 60 + now.getMinutes();
+  const { day, minutes } = madridPart(now);
+  const today = openingHours[day];
+
+  // A block that opened the previous day and runs past midnight (e.g. the
+  // late "25:00" close on Friday/Saturday) is still in swing early today.
+  const previous = openingHours[(day + 6) % 7];
+  for (const block of previous.blocks) {
+    const to = toMinutes(block.to);
+    if (to > 24 * 60 && minutes < to - 24 * 60) {
+      return {
+        isOpen: true,
+        current: `${block.from} – ${formatTime(block.to)}`,
+        dayClosed: false,
+        closingNote: null,
+      };
+    }
+  }
 
   if (today.blocks.length === 0) {
     return { isOpen: false, current: null, dayClosed: true, closingNote: null };
@@ -97,12 +139,11 @@ export function getOpenState(now: Date = new Date()): OpenState {
 
   for (const block of today.blocks) {
     const from = toMinutes(block.from);
-    // A block ending at 24:00 runs to the end of the day
-    const to = block.to === "24:00" ? 24 * 60 : toMinutes(block.to);
+    const to = toMinutes(block.to);
     if (minutes >= from && minutes < to) {
       return {
         isOpen: true,
-        current: `${block.from} – ${block.to === "24:00" ? "00:00" : block.to}`,
+        current: `${block.from} – ${formatTime(block.to)}`,
         dayClosed: false,
         closingNote: null,
       };

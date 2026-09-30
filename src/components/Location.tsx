@@ -14,7 +14,7 @@ import {
 } from "@/data/restaurant";
 import type { Ui } from "@/data/ui";
 import { locationPhoto, type Photo } from "@/data/photos";
-import { getOpenState, type OpenState } from "@/lib/utils";
+import { formatTime, getOpenState, todayIndex, type OpenState } from "@/lib/utils";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 import { ButtonLink } from "./Button";
@@ -126,7 +126,7 @@ export function Location({
   location: Ui["location"];
   ctaDirections: string;
 }) {
-  const todayIdx = (new Date().getDay() + 6) % 7;
+  const todayIdx = todayIndex();
 
   return (
     <section
@@ -253,15 +253,14 @@ export function Location({
                       {entry.blocks.length === 0 ? (
                         <span className="text-ink-faint">{locationCopy.closed}</span>
                       ) : entry.blocks.length === 1 ? (
-                        `${entry.blocks[0].from} – ${entry.blocks[0].to === "24:00" ? "00:00" : entry.blocks[0].to}`
+                        `${entry.blocks[0].from} – ${formatTime(entry.blocks[0].to)}`
                       ) : (
                         <span className="flex flex-col">
                           <span>
-                            {entry.blocks[0].from} – {entry.blocks[0].to}
+                            {entry.blocks[0].from} – {formatTime(entry.blocks[0].to)}
                           </span>
                           <span className="text-ink-faint">
-                            {entry.blocks[1].from} –{" "}
-                            {entry.blocks[1].to === "24:00" ? "00:00" : entry.blocks[1].to}
+                            {entry.blocks[1].from} – {formatTime(entry.blocks[1].to)}
                           </span>
                         </span>
                       )}

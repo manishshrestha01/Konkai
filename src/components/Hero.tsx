@@ -76,7 +76,7 @@ export function Hero({ locale, t }: { locale: Locale; t: Ui }) {
             </ButtonLink>
 
             <ButtonLink
-              href={links.reserveTheFork.value}
+              href={links.reserve.value}
               variant="outline"
               size="lg"
               className="border-white/50 text-white hover:border-white hover:bg-white hover:text-ink"

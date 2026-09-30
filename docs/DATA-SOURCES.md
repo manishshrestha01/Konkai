@@ -7,11 +7,9 @@ omitted or explicitly marked `derived`.
 
 | `src` id | Source | URL | Used for |
 | --- | --- | --- | --- |
-| `official-site` | Konkai Sushi House website | https://www.konkaisushi.es/ | Name, address, postal code, phone, hours, cuisine description, terrace size, parking, printable menu PDF, privacy policy |
-| `google-maps` | Google Maps listing | https://maps.app.goo.gl/8cKcmhTtrv5XRct88 | Canonical map link, neighbourhood, Maps listing link |
+| `official-site` | Konkai Sushi House website | https://www.konkaisushi.es/ | Name, address, postal code, phone, cuisine description, terrace size, parking, printable menu PDF, privacy policy |
+| `google-maps` | Google Maps listing | https://maps.app.goo.gl/8cKcmhTtrv5XRct88 | Canonical map link, neighbourhood, Maps listing link, opening hours, reservation link |
 | `official-instagram` | Instagram (handle confirmed by the owner) | https://www.instagram.com/konkai.sushi.house | Social profile link |
-| `thefork` | TheFork | https://www.thefork.com/restaurant/konkai-sushi-house-r367737 | Reservation link, cuisine classification, average spend |
-| `opentable` | OpenTable | https://www.opentable.com/r/konkai-sushi-house-barcelona | Reservation link, set-menu price band |
 | `ubereats` | Uber Eats store | https://www.ubereats.com/es-en/store/konkai-sushi-house/4pG2X2H_QKC5dcHP6P3b4w | Cuisine tags, dine-in / takeaway / delivery services, order link |
 | `bcnrestaurantes` | BCN Restaurantes (directory) | https://www.bcnrestaurantes.com/ | Nearest metro station, cross-check of neighbourhood |
 | `osm-nominatim` | OpenStreetMap / Nominatim | https://nominatim.openstreetmap.org/ | Latitude and longitude |
@@ -21,8 +19,8 @@ omitted or explicitly marked `derived`.
 
 ## Known discrepancies
 
-- **Street number.** The official site says `222`. OpenTable and TheFork show
-  `222B` / `222 Bis`. The site uses `222` because that is what the restaurant
+- **Street number.** The official site says `222`. The restaurant's Instagram
+  shows `222 Bis`. The site uses `222` because that is what the restaurant
   publishes about itself. Google Maps resolves to the same Knowledge Graph
   entity.
 - **Postal code.** The official site says `08013`. Nominatim returns `08037`
@@ -35,10 +33,10 @@ omitted or explicitly marked `derived`.
 ## Claims deliberately not made
 
 - **Walk-ins.** No source states that walk-ins are accepted, so the site does
-  not say so. It points to the reservation platforms instead.
-- **Prices on reservation platforms.** TheFork's average spend (`€16`) and
-  OpenTable's set-menu band (`€31–€50`) are different things; neither is shown
-  as the a-la-carte price. The a-la-carte menu is the only price source used.
+  not say so. It points to the restaurant's Google Maps listing to book or
+  reserve instead.
+- **Prices on reservation platforms.** No third-party price figures are shown;
+  the a-la-carte menu is the only price source used.
 
 ## The Google reviews widget
 
@@ -62,15 +60,22 @@ Because the site is in Barcelona, the widget is **not** loaded on page load:
 - the cookie notice at `/{locale}/cookies` names the third party and the data it
   may process, in all three languages.
 
-The published quotes shown alongside the rating are real reviews from TheFork
-and OpenTable, reproduced verbatim and attributed to their platform. They are
-hand-maintained in `src/data/restaurant.ts` and are not Google reviews.
+The rating shown comes from the restaurant's Google business profile. The
+restaurant operates its reservations and reviews through Google Maps; no
+third-party review quotes are reproduced on the site.
 
 ## Photography
 
-All images were downloaded from the official site's own gallery
-(`konkaisushi.es/img-trans/productos/...`) and processed by
-`scripts/build-images.mjs` into WebP at 1600/960/480 px.
+The gallery blends two sources:
+
+- photographs downloaded from the official site's own gallery
+  (`konkaisushi.es/img-trans/productos/...`), matching the previous build;
+- ~25 new frames supplied by the owner for the relaunch. Four tiny thumbnails
+  and one duplicate were dropped.
+
+All were processed by `scripts/build-images.mjs` into WebP at up to 1600/960/480
+px, and the official logo had its near-black plate keyed to alpha and trimmed
+to its content box.
 
 Alt text in `src/data/photos.ts` is generic and neutral. The photographs could
 not be reviewed individually during the build, so:

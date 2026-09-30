@@ -7,11 +7,11 @@
  * placeholder. Nothing is ever upscaled: a 1024px source never yields a 1600px
  * file, it simply yields its single native size.
  *
- * The logo is handled separately. The official file is a 150x75 deep-red
- * wordmark on an opaque white plate, and 150px is the only rendition the site
- * publishes. Its white background is keyed to alpha so it can sit on the warm
- * ivory page background without a visible white box, and it is emitted at its
- * native size only.
+ * The logo is handled separately. The official file is a wide red wordmark
+ * with a grey subtitle on a near-black plate, which has already had its black
+ * background keyed to alpha and been trimmed to its content box in raw-photos
+ * (`-fuzz 22% -transparent black -trim`), so it can sit on the warm ivory page
+ * background. It is emitted at its native size only.
  *
  * Requires ImageMagick on PATH. Run with: npm run images
  */
@@ -28,7 +28,7 @@ const QUALITY = "82";
 /** Binary stdout must stay a Buffer; decoding it as text would corrupt it. */
 const run = promisify(execFile);
 
-/** White plate behind the official wordmark, removed with a soft fuzz. */
+/** The logo arrives keyed to alpha and trimmed to its content box already. */
 const LOGO = "logo";
 const isLogo = (id) => id === LOGO;
 
@@ -39,9 +39,6 @@ await mkdir(OUT, { recursive: true });
 const files = (await readdir(SOURCE)).filter((f) => f.endsWith(".png")).sort();
 const manifest = {};
 
-/** Arguments that turn the logo's white background into transparency. */
-const keyWhite = ["-fuzz", "14%", "-transparent", "white"];
-
 for (const file of files) {
   const id = path.basename(file, ".png");
   const src = path.join(SOURCE, file);
@@ -51,17 +48,17 @@ for (const file of files) {
   });
   const [width, height] = dims.trim().split(" ").map(Number);
 
-  // The logo is keyed first; photographs are left untouched.
-  const input = isLogo(id) ? [src, ...keyWhite] : [src];
-
-  // Only widths at or below the native size are worth emitting.
-  const targets = isLogo(id) ? [width] : WIDTHS.filter((w) => w <= width);
+  // Only widths at or below the native size are worth emitting. When a photo
+  // is narrower than the smallest raster width, emit its single native size
+  // (never upscale), matching the handling of the logo.
+  const rasters = WIDTHS.filter((w) => w <= width);
+  const targets = isLogo(id) || rasters.length === 0 ? [width] : rasters;
 
   const sizes = {};
   for (const target of targets) {
     const out = path.join(OUT, `${id}-${target}.webp`);
     await convert([
-      ...input,
+      src,
       "-resize", `${target}x`,
       "-strip",
       "-quality", QUALITY,
@@ -73,9 +70,9 @@ for (const file of files) {
 
   // 20x14 base64 placeholder for the blur-up background.
   const { stdout: lqip } = await convert([
-    ...input,
+    src,
     "-resize", "20x14!",
-    "-background", isLogo(id) ? "none" : undefined,
+    "-background", "none",
     "-alpha", "on",
     "-strip",
     "-quality", "30",
@@ -85,7 +82,7 @@ for (const file of files) {
   const base64 = Buffer.from(lqip).toString("base64");
 
   manifest[id] = { width, height, sizes, blur: `data:image/webp;base64,${base64}` };
-  console.log(`✓ ${id}  ${width}x${height}${isLogo(id) ? "  (white keyed to alpha)" : ""}`);
+  console.log(`✓ ${id}  ${width}x${height}${isLogo(id) ? "  (alpha keyed at source)" : ""}`);
 }
 
 await writeFile(

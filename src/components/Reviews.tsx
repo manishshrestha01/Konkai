@@ -1,5 +1,5 @@
 import { formatScore } from "@/lib/utils";
-import { address, links, ratings, reviews, type Locale } from "@/data/restaurant";
+import { address, links, ratings, type Locale } from "@/data/restaurant";
 import type { Ui } from "@/data/ui";
 import { ButtonLink } from "./Button";
 import { ArrowUpRight, Quote, Star } from "./Icons";
@@ -34,9 +34,6 @@ export function Reviews({ locale, t }: { locale: Locale; t: Ui }) {
   const formattedCount = new Intl.NumberFormat(
     locale === "en" ? "en-GB" : locale === "es" ? "es-ES" : "ca-ES",
   ).format(count);
-  // The one quote carried at display size; the rest sit beneath it, quieter.
-  const lead = reviews[0];
-  const rest = reviews.slice(1);
 
   return (
     <section
@@ -81,43 +78,14 @@ export function Reviews({ locale, t }: { locale: Locale; t: Ui }) {
             </ButtonLink>
           </div>
 
-          {/* The one large quote */}
-          <figure className="lg:col-span-6 lg:col-start-7">
+          {/* A note on where the rating comes from, in place of the quotes */}
+          <div className="lg:col-span-6 lg:col-start-7 lg:self-center">
             <Quote aria-hidden="true" className="h-10 w-10 text-accent" />
-            <blockquote
-              lang="en"
-              className="mt-6 font-display text-[clamp(1.5rem,3.1vw,2.35rem)] leading-[1.3] font-semibold tracking-[-0.025em] text-ink"
-            >
-              {lead.quote}
-            </blockquote>
-            <figcaption className="mt-7 text-[0.85rem] text-ink-mute">
-              {lead.author}
-              <span className="mx-2 text-ink-faint">·</span>
-              {lead.platform}
-            </figcaption>
-          </figure>
+            <p className="mt-6 measure text-[1.05rem] leading-[1.7] text-ink-soft">
+              {t.reviews.blurb}
+            </p>
+          </div>
         </div>
-
-        {/* The remaining quotes, set as a quiet typographic list */}
-        {rest.length > 0 ? (
-          <ul className="mt-20 grid gap-x-16 gap-y-10 border-t border-line pt-14 sm:grid-cols-2">
-            {rest.map((review) => (
-              <li key={`${review.author}-${review.date}`} className="border-b border-line-soft pb-8">
-                <blockquote
-                  lang="en"
-                  className="measure text-[1.05rem] leading-[1.65] text-ink-soft"
-                >
-                  {review.quote}
-                </blockquote>
-                <p className="mt-4 text-[0.82rem] text-ink-mute">
-                  {review.author}
-                  <span className="mx-2 text-ink-faint">·</span>
-                  {review.platform}
-                </p>
-              </li>
-            ))}
-          </ul>
-        ) : null}
 
         <p className="sr-only">{address.street}, {address.locality}</p>
       </div>

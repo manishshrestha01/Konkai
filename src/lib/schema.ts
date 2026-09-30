@@ -9,7 +9,6 @@ import {
   phone,
   priceRange,
   ratings,
-  reviews,
   SITE_URL,
   type Locale,
 } from "@/data/restaurant";
@@ -37,22 +36,44 @@ const DAY_SCHEMA: Record<string, string> = {
 };
 
 export function restaurantJsonLd(locale: Locale) {
-  const openingHoursSpecification = openingHours.map((entry) => ({
+  // A block may close after midnight ("25:00" = 01:00 the next day), which
+  // schema.org cannot express in a single `closes`. Split those overnight
+  // blocks into the same-day run (to 24:00) plus an early-hours spec on the
+  // following day.
+  const specs: Record<string, { opens: string; closes: string }[]> = {};
+  openingHours.forEach((entry, i) => {
+    const key = entry.day;
+    const list = (specs[key] ??= []);
+    const nextDay = openingHours[(i + 1) % 7].day;
+    for (const block of entry.blocks) {
+      const toMinutes = (t: string) => {
+        const [h, m] = t.split(":").map(Number);
+        return h * 60 + m;
+      };
+      const to = toMinutes(block.to);
+      list.push({ opens: block.from, closes: to > 24 * 60 ? "24:00" : block.to });
+      if (to > 24 * 60) {
+        const roll = to % (24 * 60);
+        (specs[nextDay] ??= []).push({
+          opens: "00:00",
+          closes: `${String(Math.floor(roll / 60)).padStart(2, "0")}:${String(roll % 60).padStart(2, "0")}`,
+        });
+      }
+    }
+  });
+
+  const openingHoursSpecification = Object.entries(specs).map(([day, daySpecs]) => ({
     "@type": "OpeningHoursSpecification",
-    dayOfWeek: `https://schema.org/${DAY_SCHEMA[entry.day]}`,
-    ...(entry.blocks.length > 0
+    dayOfWeek: `https://schema.org/${DAY_SCHEMA[day]}`,
+    opens: daySpecs[0].opens,
+    closes: daySpecs[0].closes,
+    ...(daySpecs.length > 1
       ? {
-          opens: entry.blocks[0].from,
-          closes: entry.blocks[entry.blocks.length - 1].to,
-        }
-      : {}),
-    ...(entry.blocks.length > 1
-      ? {
-          additionalOpeningHoursSpecification: entry.blocks.slice(1).map((b) => ({
+          additionalOpeningHoursSpecification: daySpecs.slice(1).map((b) => ({
             "@type": "OpeningHoursSpecification",
-            dayOfWeek: `https://schema.org/${DAY_SCHEMA[entry.day]}`,
-            opens: b.from,
-            closes: b.to,
+            dayOfWeek: `https://schema.org/${DAY_SCHEMA[day]}`,
+            opens: b.opens,
+            closes: b.closes,
           })),
         }
       : {}),
@@ -85,15 +106,13 @@ export function restaurantJsonLd(locale: Locale) {
       },
       hasMap: links.googleMaps.value,
       openingHoursSpecification,
-      acceptsReservations: `${links.reserveTheFork.value} ${links.reserveOpenTable.value}`,
+      acceptsReservations: links.reserve.value,
       hasMenu: links.menu.value,
       sameAs: [
         links.googleMaps.value,
         links.website.value,
         links.instagram.value,
         links.facebook.value,
-        links.reserveTheFork.value,
-        links.reserveOpenTable.value,
         links.orderUberEats.value,
       ],
       ...(ratings.google.value != null
@@ -107,23 +126,6 @@ export function restaurantJsonLd(locale: Locale) {
             },
           }
         : {}),
-      review: reviews.slice(0, 3).map((r) => ({
-        "@type": "Review",
-        author: { "@type": "Person", name: r.author },
-        datePublished: r.date,
-        reviewBody: r.quote,
-        // Named so it is clear these are third-party published reviews,
-        // not statements made by the restaurant.
-        publisher: { "@type": "Organization", name: r.platform },
-        reviewRating: {
-          "@type": "Rating",
-          ratingValue: r.score.includes("/")
-            ? (Number.parseFloat(r.score) / 10) * 5
-            : Number.parseFloat(r.score),
-          bestRating: 5,
-          worstRating: 1,
-        },
-      })),
     },
 
     /* ---------------------------------------------------------------- */
@@ -171,31 +173,31 @@ export function faqJsonLd(locale: Locale) {
       q1: "Where is Konkai Sushi House in Barcelona?",
       a1: `${address.street}, ${address.postalCode} ${address.locality}, in the ${address.neighborhood.en} district — a short walk from the Sagrada Família.`,
       q2: "What are the opening hours?",
-      a2: "Monday to Sunday: lunch from 12:00 to 16:00 and dinner from 16:00 to midnight. Tuesday has no lunch service.",
+      a2: "Monday to Sunday: lunch from 12:00 to 16:00 and dinner from 16:00 to midnight.",
       q3: "What kind of cuisine does Konkai Sushi House serve?",
       a3: "Japanese cuisine, with sushi, sashimi, maki, nigiri, temaki, chirashi and poke bowls, alongside hot dishes such as noodles, rice and soups.",
       q4: "Can I reserve a table at Konkai Sushi House?",
-      a4: "Yes. Tables can be booked through TheFork or OpenTable, or by calling the restaurant on +34 931 560 414.",
+      a4: "Yes. Tables can be booked from the restaurant's Google Maps listing, or by calling the restaurant on +34 931 560 414.",
     },
     es: {
       q1: "¿Dónde está Konkai Sushi House en Barcelona?",
       a1: `${address.street}, ${address.postalCode} ${address.locality}, en el barrio de ${address.neighborhood.es} — a pocos metros de la Sagrada Família.`,
       q2: "¿Cuál es el horario de apertura?",
-      a2: "De lunes a domingo: comida de 12:00 a 16:00 y cena de 16:00 a medianoche. El martes no hay servicio de mediodía.",
+      a2: "De lunes a domingo: comida de 12:00 a 16:00 y cena de 16:00 a medianoche.",
       q3: "¿Qué tipo de cocina sirve Konkai Sushi House?",
       a3: "Cocina japonesa, con sushi, sashimi, maki, nigiri, temaki, chirashi y poke bowls, además de platos calientes como tallarines, arroz y sopas.",
       q4: "¿Puedo reservar mesa en Konkai Sushi House?",
-      a4: "Sí. Se puede reservar en TheFork o OpenTable, o llamando al +34 931 560 414.",
+      a4: "Sí. Se puede reservar desde la ficha de Google Maps del restaurante, o llamando al +34 931 560 414.",
     },
     ca: {
       q1: "On és Konkai Sushi House a Barcelona?",
       a1: `${address.street}, ${address.postalCode} ${address.locality}, al barri de ${address.neighborhood.ca} — a pocs metres de la Sagrada Família.`,
       q2: " Quin és l'horari d'obertura?",
-      a2: "De dilluns a diumenge: dinar de 12:00 a 16:00 i sopar de 16:00 a mitjanit. El dimarts no hi ha servei de migdia.",
+      a2: "De dilluns a diumenge: dinar de 12:00 a 16:00 i sopar de 16:00 a mitjanit.",
       q3: "Quin tipus de cuina serveix Konkai Sushi House?",
       a3: "Cuina japonesa, amb sushi, sashimi, maki, nigiri, temaki, chirashi i poke bowls, a més de plats calents com tallarines, arròs i sopes.",
       q4: "Puc reservar taula a Konkai Sushi House?",
-      a4: "Sí. Es pot reservar a TheFork o OpenTable, o trucant al +34 931 560 414.",
+      a4: "Sí. Es pot reservar des de la fitxa de Google Maps del restaurant, o trucant al +34 931 560 414.",
     },
   }[locale];
 

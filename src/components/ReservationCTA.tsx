@@ -5,9 +5,10 @@ import { ButtonLink } from "./Button";
 import { ArrowUpRight, Phone } from "./Icons";
 
 /**
- * Reservations run through the platforms the restaurant already uses.
- * No booking form is invented here — both buttons go to a real provider,
- * and the phone number is the restaurant's own.
+ * Reservations run through the restaurant's Google Maps listing, which is its
+ * own public booking channel. No booking form is invented here — the button
+ * goes to the listing the restaurant operates, and the phone number is the
+ * restaurant's own.
  */
 export function ReservationCTA({ locale, t }: { locale: Locale; t: Ui }) {
   return (
@@ -40,13 +41,8 @@ export function ReservationCTA({ locale, t }: { locale: Locale; t: Ui }) {
 
               <div className="lg:col-span-5 lg:col-start-8 lg:self-center">
                 <div className="flex flex-col gap-3">
-                  <ButtonLink href={links.reserveTheFork.value} variant="solid" size="lg">
-                    {t.reserve.thefork}
-                    <ArrowUpRight className="h-4 w-4" />
-                  </ButtonLink>
-
-                  <ButtonLink href={links.reserveOpenTable.value} variant="outline" size="lg">
-                    {t.reserve.opentable}
+                  <ButtonLink href={links.reserve.value} variant="solid" size="lg">
+                    {t.reserve.reserveCta}
                     <ArrowUpRight className="h-4 w-4" />
                   </ButtonLink>
 

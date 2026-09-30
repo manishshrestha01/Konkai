@@ -56,7 +56,7 @@ export function StickyActions({
           </span>
         </a>
         <a
-          href={links.reserveTheFork.value}
+          href={links.reserve.value}
           target="_blank"
           rel="noopener noreferrer"
           className="flex min-h-14 flex-col items-center justify-center gap-1 bg-ink text-paper transition-colors active:bg-accent"

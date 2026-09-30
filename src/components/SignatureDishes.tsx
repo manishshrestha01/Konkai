@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { featuredDishIds, dishById } from "@/data/menu";
-import { signaturePhotos, type Photo } from "@/data/photos";
+import { dishPhotoById, signaturePhotos, type Photo } from "@/data/photos";
 import { links, type Locale } from "@/data/restaurant";
 import type { Ui } from "@/data/ui";
 import { cx, formatPrice } from "@/lib/utils";
@@ -9,53 +9,28 @@ import { ArrowUpRight } from "./Icons";
 /**
  * Section 02 — FROM THE KITCHEN.
  *
- * The brief is explicit that these must not be six identical cards, so the
- * layout alternates deliberately: a large 4:5 lead dish, a smaller 1:1, a wide
- * 16:10 band, and so on. The sequence is fixed rather than random so the
- * composition is the same on every visit and on every language.
- *
  * The six dishes and their prices are the restaurant's own featured list.
  * Each photograph is the restaurant's, but the site never claims a given
  * photo is a picture of that specific dish.
  */
 
-type Size = "lead" | "tall" | "wide" | "std";
-
-/** Hand-set rhythm: wide, tall, std, lead, std, wide. */
-const LAYOUT: Size[] = ["lead", "std", "tall", "wide", "std", "wide"];
-
-const FRAME: Record<Size, string> = {
-  lead: "aspect-[4/5] sm:aspect-[3/4]",
-  tall: "aspect-[3/4]",
-  std: "aspect-square",
-  wide: "aspect-[16/10]",
-};
-
-const TITLE: Record<Size, string> = {
-  lead: "text-[clamp(1.6rem,3.2vw,2.4rem)]",
-  tall: "text-[clamp(1.3rem,2.2vw,1.75rem)]",
-  std: "text-[clamp(1.2rem,1.9vw,1.5rem)]",
-  wide: "text-[clamp(1.25rem,2.1vw,1.65rem)]",
-};
-
-function Dish({ dish, locale, photo, size }: {
+function Dish({ dish, locale, photo }: {
   dish: NonNullable<ReturnType<typeof dishById.get>>;
   locale: Locale;
   photo?: Photo;
-  size: Size;
 }) {
   const description = dish.description?.[locale];
   const unit = dish.unit?.[locale];
 
   return (
     <article className="group">
-      <div className={cx("media overflow-hidden", FRAME[size])}>
+      <div className="media aspect-square overflow-hidden">
         {photo ? (
           <Image
             src={photo.src}
             alt={photo.alt}
             fill
-            sizes="(min-width: 1280px) 30rem, (min-width: 768px) 44vw, 84vw"
+            sizes="(min-width: 1024px) 30vw, (min-width: 640px) 44vw, 84vw"
             loading="lazy"
             placeholder="blur"
             blurDataURL={photo.blur}
@@ -68,12 +43,7 @@ function Dish({ dish, locale, photo, size }: {
           with a rule, and the whole block shifts on hover. */}
       <div className="mt-4 flex items-start justify-between gap-5 border-t border-line pt-4 transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:translate-x-1.5">
         <div className="min-w-0">
-          <h3
-            className={cx(
-              "font-display font-bold tracking-[-0.03em] text-ink",
-              TITLE[size],
-            )}
-          >
+          <h3 className="font-display text-[clamp(1.25rem,2.1vw,1.6rem)] font-bold tracking-[-0.03em] text-ink">
             {dish.name[locale]}
           </h3>
           {unit ? (
@@ -133,28 +103,17 @@ export function SignatureDishes({ locale, t }: { locale: Locale; t: Ui }) {
           </div>
         </div>
 
-        {/* Asymmetric editorial grid. Explicit spans, not auto-flow: the point
-            is that no two frames are the same size. */}
-        <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-12">
-          {dishes.map((dish, i) => {
-            const size = LAYOUT[i % LAYOUT.length];
-            const span: Record<Size, string> = {
-              lead: "sm:col-span-2 lg:col-span-5",
-              std: "lg:col-span-3",
-              tall: "sm:col-span-1 lg:col-span-3",
-              wide: "sm:col-span-2 lg:col-span-4",
-            };
-            return (
-              <div key={dish.id} className={span[size]}>
-                <Dish
-                  dish={dish}
-                  locale={locale}
-                  photo={signaturePhotos[i % signaturePhotos.length]}
-                  size={size}
-                />
-              </div>
-            );
-          })}
+        {/* Uniform grid: every card is the same size. */}
+        <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+          {dishes.map((dish, i) => (
+            <div key={dish.id}>
+              <Dish
+                dish={dish}
+                locale={locale}
+                photo={dishPhotoById[dish.id] ?? signaturePhotos[i % signaturePhotos.length]}
+              />
+            </div>
+          ))}
         </div>
 
         <p className="mt-14 text-[0.8rem] text-ink-faint">

@@ -1039,7 +1039,7 @@ export const menu: MenuCategory[] = [
  */
 export const featuredDishIds = [
   "wakame-sarada",
-  "yaki-tori",
+  "poke-atun",
   "gyoza-pollo",
   "gyoza-gambas",
   "uramaki-casa",

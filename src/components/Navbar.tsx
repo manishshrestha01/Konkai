@@ -52,12 +52,11 @@ export function Wordmark({
             "text-white",
           )}
         >
-          KONKAI
+          KONKAI SUSHI
         </span>
       ) : (
         <OfficialLogo
-          height={56}
-          trim
+          height={36}
           priority
           className="transition-opacity duration-500 group-hover:opacity-75"
         />
@@ -242,9 +241,9 @@ export function Navbar({ locale, t }: { locale: Locale; t: Ui["nav"] }) {
  * Height of the opaque bar, in pixels. The header and the mobile sheet both
  * need it, and they must agree or the sheet shows a seam under the bar.
  *
- * The logo renders at `height={120}`, which is 64px of visible mark once the
- * transparent padding is trimmed. The bar is 78px, so the mark fills most of
- * it — about 7px of air on each side — while keeping its 44px-tall tap target.
+ * The logo is trimmed to its content, so at `height={48}` the visible mark is
+ * 48px tall (225px wide). The bar is 78px, so the mark fills most of it —
+ * about 15px of air on each side — while keeping a comfortable tap target.
  */
 const BAR_HEIGHT = 78;
 
@@ -319,19 +318,16 @@ const links = [
         <div className="container-page relative flex h-full items-center gap-6 xl:gap-8">
           {solid ? (
             // The restaurant's own logo, large, on the ivory bar where its
-            // #AA1218 red reaches 7:1.
+            // red reads best.
             <Link
               href={`/${locale}`}
               className="group inline-flex shrink-0 items-center no-underline"
-              /* Optical alignment of the mark inside the bar, set in devtools.
-                 `color: transparent` is inert here: the link holds only the
-                 logo, whose <img> is alt="" and hidden from assistive tech. */
-              style={{ color: "transparent", marginTop: 26, marginLeft: 3 }}
+              /* The lockup is trimmed to its content, so flex centering alone
+                 aligns it in the bar; no optical offset is needed. */
               aria-label="Konkai Sushi House — home"
             >
               <OfficialLogo
-                height={120}
-                trim
+                height={48}
                 priority
                 className="transition-opacity duration-500 group-hover:opacity-75"
               />
