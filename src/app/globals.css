@@ -1,0 +1,452 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Konkai Sushi House — design tokens
+
+   Direction: image-first, editorial, warm, urban. Contemporary Japanese food
+   magazine, not a Tokyo fine-dining template.
+
+   The colour field is deliberately lopsided:
+     ~70%  warm ivory  #F7F3EA
+     ~20%  dark       #181818   (hero, reservation, closing type)
+     ~10%  red        #B52A22   (CTA, active category, labels, hovers)
+
+   Red is an accent. It never becomes a background, because a red-dominant
+   page is the "generic sushi website" look this must not have.
+   ========================================================================== */
+
+@theme {
+  /* -- Surfaces ---------------------------------------------------------
+     The dominant field is warm ivory. Dark is reserved for the hero, the
+     reservation panel and the closing type — nowhere else. */
+  --color-paper: #f7f3ea; /* the page */
+  --color-paper-warm: #f1ebde; /* alternating sections */
+  --color-ivory: #fcfaf5; /* raised blocks on ivory */
+  --color-ivory-deep: #e8e1d1; /* insets, chips */
+  --color-white: #ffffff;
+
+  /* -- Ink --------------------------------------------------------------
+     Dark is a true near-neutral #181818, muted is the specified #8C877D. */
+  --color-ink: #181818; /* headings on light */
+  --color-ink-soft: #2b2a27; /* sub-headings */
+  --color-ink-mute: #5d594f; /* body copy (6.4:1 on ivory) */
+  --color-ink-faint: #8c877d; /* labels, captions, dividers */
+  --color-ink-invert: #f7f3ea; /* text on dark */
+
+  /* -- Accent -----------------------------------------------------------
+     Red is an accent, never a field. Secondary orange is the warmer of the
+     two and carries prices and small highlights. */
+  --color-accent: #b52a22;
+  --color-accent-deep: #8e1f19;
+  --color-accent-soft: #d86b32; /* secondary */
+  --color-accent-wash: #f4e3e1; /* red tint for fills */
+
+  /* -- Warm neutrals (icons, rules) -------------------------------------- */
+  --color-clay: #b08a5e;
+  --color-clay-dark: #6f5a3c;
+  --color-wood: #b08a5e;
+  --color-wood-light: #dcc9a9;
+  --color-wood-dark: #6f5a3c;
+
+  /* -- Rules ------------------------------------------------------------- */
+  --color-line: #e0d8c7;
+  --color-line-soft: #ebe4d6;
+  --color-line-dark: #35322d;
+
+  /* -- Type --------------------------------------------------------------
+     Two families only: Sora for display, Manrope for everything else. */
+  --font-display: var(--font-sora), "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-manrope), "Manrope", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+
+  /* -- Motion ------------------------------------------------------------- */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* -- Layout ------------------------------------------------------------- */
+  --spacing-header: 4.5rem;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  :root {
+    --header-h: 72px;
+    color-scheme: light;
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --header-h: 76px;
+    }
+  }
+
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    /* Deliberately NOT `scroll-behavior: smooth`.
+
+       During a client-side route transition Next walks the DOM calling
+       scrollIntoView() on every element to force layout, relying on the
+       ambient scroll-behavior being `auto`. With smooth set globally those
+       calls animate, and because the walk ends at the last element in the
+       document the page glides down to the footer on every navigation.
+
+       Smooth in-page anchors are restored in SmoothAnchorScroll, which
+       animates only the links we opt in. */
+    /* Sticky header must not cover anchor targets */
+    scroll-padding-top: calc(var(--header-h) + 1rem);
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-accent) 22%, transparent);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Sora carries the display hierarchy: heavy weights, tight tracking, and a
+     line-height that holds together at 100px. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+
+  h3,
+  h4 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  img {
+    /* Food photography is the point of this site; only a light warm lift. */
+    filter: saturate(1.05) contrast(1.02);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ==========================================================================
+   Components
+   ========================================================================== */
+
+@layer components {
+  /* -- The numbered section label: "01 / THE RESTAURANT" ------------------- */
+  .section-index {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-faint);
+  }
+
+  .section-index__num {
+    color: var(--color-accent);
+  }
+
+  /* Small label used above section headings */
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-faint);
+  }
+
+  .hairline {
+    border-top: 1px solid var(--color-line);
+  }
+
+  /* -- Section rhythm -----------------------------------------------------
+     Desktop 120–180px, mobile 72–96px. Deliberately generous: the brief is
+     explicit that this must not read as a compressed content page. */
+  .section {
+    padding-block: clamp(4.5rem, 8vw, 11rem);
+  }
+
+  /* -- Container: 1440px max, the top of the requested 1400–1500 range ----- */
+  .container-page {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+    max-width: 90rem;
+  }
+
+  /* Prose is capped to a 45–75 character measure, whatever the container. */
+  .container-prose {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+    max-width: 90rem;
+  }
+
+  .measure {
+    max-width: 62ch;
+  }
+
+  /* -- Editorial media ---------------------------------------------------- */
+  .media {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-ivory-deep);
+  }
+
+  .media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* -- Text link with a wipe-in underline ---------------------------------
+     The padding lifts a standalone link to a real touch target; links inside
+     running text opt out with .link-wipe-inline. */
+  .link-wipe {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding-block: 0.55rem;
+    text-decoration: none;
+  }
+
+  .link-wipe-inline {
+    min-height: 0;
+    padding-block: 0.1rem;
+  }
+
+  .link-wipe::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0.5rem;
+    height: 1.5px;
+    width: 100%;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s var(--ease-out-soft);
+  }
+
+  .link-wipe-inline::after {
+    bottom: 0;
+    height: 1px;
+  }
+
+  .link-wipe:hover::after,
+  .link-wipe:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* -- Horizontal scroll region -------------------------------------------
+     Used for the menu categories and the dish gallery. Bleeds to the screen
+     edge on a phone so it is obvious there is more to the side. */
+  .rail {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    padding-block: 0.5rem;
+    padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+    margin-inline: calc(-1 * clamp(1.25rem, 4vw, 3.5rem));
+  }
+
+  .rail > * {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+  }
+
+  /* Fades the trailing edge so the rail reads as scrollable */
+  .rail-fade {
+    mask-image: linear-gradient(to right, #000 calc(100% - 3rem), transparent 100%);
+  }
+}
+
+/* ==========================================================================
+   Animations — all opt out under prefers-reduced-motion
+   ========================================================================== */
+
+@layer utilities {
+  @keyframes rise-in {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 2rem, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(1.03);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* The hero photograph settles from 1.05 to 1 over 1.4s. Subtle enough to
+     read as a photograph coming into focus rather than as an animation. */
+  @keyframes hero-settle {
+    from {
+      transform: scale(1.05);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  /* A very slow push once the hero has settled, so the image stays alive. */
+  @keyframes hero-breathe {
+    from {
+      transform: scale(1) translate3d(0, 0, 0);
+    }
+    to {
+      transform: scale(1.07) translate3d(0, -1%, 0);
+    }
+  }
+
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(0, -1.25%, 0) scale(1.04);
+    }
+  }
+
+  .animate-rise {
+    animation: rise-in 0.7s var(--ease-out-soft) both;
+  }
+
+  .animate-fade {
+    animation: fade-in 0.8s var(--ease-out-soft) both;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.8s var(--ease-out-soft) both;
+  }
+
+  .animate-hero {
+    animation: hero-settle 1.4s var(--ease-out-soft) both;
+  }
+
+  .animate-breathe {
+    animation: hero-breathe 26s var(--ease-in-out-soft) 1.4s infinite alternate;
+  }
+
+  .animate-drift {
+    animation: drift 26s var(--ease-in-out-soft) infinite;
+  }
+
+  /* Staggered entrance for the hero text block */
+  .d-1 {
+    animation-delay: 120ms;
+  }
+  .d-2 {
+    animation-delay: 240ms;
+  }
+  .d-3 {
+    animation-delay: 360ms;
+  }
+  .d-4 {
+    animation-delay: 480ms;
+  }
+
+  /* -- clip-path image reveal ---------------------------------------------
+     Wipes the frame open from the bottom. The 0.8s duration and the
+     --ease-out-soft curve keep it inside the 600–800ms budget. */
+  @keyframes clip-up {
+    from {
+      clip-path: inset(100% 0 0 0);
+    }
+    to {
+      clip-path: inset(0% 0 0 0);
+    }
+  }
+
+  .reveal-clip {
+    animation: clip-up 0.8s var(--ease-out-soft) both;
+  }
+
+  /* -- Hover: image zoom, type shift, arrow ------------------------------- */
+  .hover-zoom {
+    transition: transform 0.7s var(--ease-out-soft);
+  }
+
+  .group:hover .hover-zoom,
+  .hover-zoom:hover {
+    transform: scale(1.06);
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
