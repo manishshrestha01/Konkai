@@ -2,16 +2,16 @@ import Image from "next/image";
 import { logo } from "@/data/photos";
 
 /**
- * The official lockup, keyed to alpha (remove.bg export) and trimmed to its
- * 636x142 content box by scripts/build-images.mjs, so there is no wasted margin
+ * The official lockup, keyed to alpha (white removed) and trimmed to its
+ * 1966x385 content box by scripts/build-images.mjs, so there is no wasted margin
  * to crop out: the asset fills its own box exactly at any size.
  *
- * Aspect ratio ≈ 4.48:1 — the red wordmark with its grey subtitle. Callers pick
+ * Aspect ratio ≈ 5.1:1 — the red wordmark with its subtitle below. Callers pick
  * a `height`; the width follows the aspect, so a height of 48 reads as a
- * 215px-wide lockup.
+ * 245px-wide lockup.
  */
 interface OfficialLogoProps {
-  /** Rendered height in CSS pixels. Never upscales past the source's 636px width. */
+  /** Rendered height in CSS pixels. Never upscales past the source's 1966px width. */
   height?: number;
   className?: string;
   priority?: boolean;

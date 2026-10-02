@@ -470,13 +470,23 @@
     },
     "blur": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAAAQBACdASoUAA4APxFysFAvqaajsAgB8CIJbACdIDZDMssZ0cj3aJUCAAD+7Nq0y2LCcSUVwvu5xTHNFpKwnF5bmB8E78GGUX1jHbxNTPUPIK7Y1ai1MzZq9HXS5PM/omLbBpOUtUqavN6GN7fKJbjMADlPCAAA"
   },
-  "logo": {
-    "width": 636,
-    "height": 142,
+  "konkai-sushi-house-logo": {
+    "width": 2170,
+    "height": 725,
     "sizes": {
-      "636": "/_next/image?url=%2Fimages%2Flogo-636.webp&w=636&q=82"
+      "480": "/_next/image?url=%2Fimages%2Fkonkai-sushi-house-logo-480.webp&w=480&q=82",
+      "960": "/_next/image?url=%2Fimages%2Fkonkai-sushi-house-logo-960.webp&w=960&q=82",
+      "1600": "/_next/image?url=%2Fimages%2Fkonkai-sushi-house-logo-1600.webp&w=1600&q=82"
     },
-    "blur": "data:image/webp;base64,UklGRsYBAABXRUJQVlA4WAoAAAAQAAAAEwAADQAAQUxQSD0BAAABL8SwbdtIJ/Xff+EkLW6GiPnPL0I4kJ3wKNEgGqSQQgghRCMI0SGEEoR/BZ6mQzZ4hOgghHAbxARBFw0alJoFzTYNByBIkmzammfbtm3btvVt2/77vvdjDxH9T9bjDAsoFoF/WASiX/ccQLlyQKTkqgIQEV823V/3Aiq1AGKUHOsA0cjNl63rkUcbCPmNWYkiQBd4Om3di+fz4mTzfm8eX+up1r25w9HT3qvp8y06rS5P2a05bWs9vR0sHb5lbt9dg/TizH0+I8oPE8Pd2OHDYucqv4iPN3vNCU2/33FspA73jxfl05W/Xz94GCqf589H+5Hd7seNWMKl8OhiNZdgoMs1IqrQ9H1HACYJMIBSaAz4xVnFgOhsWoVEobGafAI8/DM1KrViLR221oI4+KdKxWrJfACxF5wYQAEAAABWUDggYgAAAJAEAJ0BKhQADgA/EXSxUK+qJyOwCAHwIglsAJ0yhHcmgeH+A1tC6xiyA2y4gAD+nvlaWICbr7g+k5dgbt4GEanMzj/8SDZStZ8T2hv+Vge6INog1y2KEFmnWo5MCeQ5igAA"
+    "blur": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAACwAwCdASoUAA4APxFysFAvqaajsAgB8CIJaACdAB579nv01gAmAAD+5/t7L8b8NZa79PVsszd7oIqSvJSnWYdEfDT/ZDkhGPBw+ZLEUmX0RRzzTwxHzUMOWGMuDfrliK+663oeAAAAAA=="
+  },
+  "logo": {
+    "width": 1966,
+    "height": 385,
+    "sizes": {
+      "1966": "/_next/image?url=%2Fimages%2Flogo-1966.webp&w=1966&q=82"
+    },
+    "blur": "data:image/webp;base64,UklGRs4BAABXRUJQVlA4WAoAAAAQAAAAEwAADQAAQUxQSEMBAAAN/8OgkSRF33OM79/t3j1KiJj/POKfY4ItBgfbgSyIYYljEJgj5ngRkqg4YYCDLoMgcCKII1iCN8ESWAAxCF4FGxC2bTvWKn2ybds117w1b9m27dr3pe+vjxH9T97b/AaFLxxgQN5g8I3DyMdbyiALXypumuRJed4H4Ow4jPn9RRW+BNQuULVufxHk053oA7nH0Rn9oZbxePBgkSs7oldZVKc6ETATLZ2k7FtY9fakecqLn0Ljc6DQeeXXSW+2m2uJ3MSac1lFgC+SGoKZ9W1cvfG5cLyCmE/sA9X07OKGDreBuyoBsfloTnaY1bra5o4cqctmDIORpdhLIUZkyOOshEhJrqmoem0LEuqOCB18cQa4F0J2S8Alx+e8Jw2JOyHDuo6tAdvDF5Y626Td/Ylggd/s4F+ktSHyBTxsTd6i8A8AAABWUDggZAAAAPADAJ0BKhQADgA/EXKwUC+ppqOwCAHwIglsALELwALj8sCsNTg4gqAA/nGg6LAeOef0gvlQGPWVQU6UJbDCPZq/1X+Pu5tSqW/wMLszkJLq7lcZhRIC1KJesgrQK0b/879/AAA="
   },
   "screenshot-6765306d99f8": {
     "width": 1998,

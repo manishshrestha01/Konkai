@@ -71,14 +71,14 @@ export const heroPhoto = toPhoto(
 );
 
 /**
- * The official logo, taken from the owner's own artwork. Its background was
- * keyed to alpha (remove.bg export) and it was trimmed to its 636x142 content
- * box by scripts/build-images.mjs, so it sits on the warm ivory page background
+ * The official logo, taken from the owner's own artwork. Its white background
+ * was keyed to alpha and it was trimmed to its 1966x385 content box by
+ * scripts/build-images.mjs, so it sits on the warm ivory page background
  * without a box.
  *
- * The lockup is a bright red (#F30203) wordmark with a light-grey subtitle, so
- * it must only be placed on a light background — over the dark hero it would
- * not read.
+ * The lockup is a bright red (#F30203) wordmark with a subtitle below, so it
+ * must only be placed on a light background — over the dark hero it would not
+ * read.
  */
 export const logo = toPhoto("logo", "Konkai Sushi House");
 
